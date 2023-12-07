@@ -39,22 +39,112 @@ However, you can use dynamic assignments for environment specific variables as w
 
 1. In your https://github.com/ArmstrongLiwox/ansible-config-mgt.git GitHub repository start a new branch and call it ***dynamic-assignments***.
 
+![dynamic-assignments](<images/new branch.jpg>)
+
 2. Create a new folder, name it ***dynamic-assignments***. 
+
+![dynamic-assignments](<images/new dir.jpg>)
 
 3. Then inside this folder, create a new file and name it ***env-vars.yml***. 
 We will instruct ***site.yml*** to include this playbook later. For now, let us keep building up the structure.
 
-Your GitHub shall have following structure by now.
-
-Note: Depending on what method you used in the previous project you may have or not have roles folder in your GitHub repository - if you used ansible-galaxy, then roles directory was only created on your Jenkins-Ansible server locally. It is recommended to have all the codes managed and tracked in GitHub, so you might want to recreate this structure manually in this case - it is up to you.
+![env-vars.yml](images/env-vars.yml.jpg)
 
 
+> Note: Depending on what method you used in the previous project you may have or not have roles folder in your GitHub repository - if you used ansible-galaxy, then roles directory was only created on your Jenkins-Ansible server locally. It is recommended to have all the codes managed and tracked in GitHub, so you might want to recreate this structure manually in this case - it is up to you.
+
+> Since we will be using the same Ansible to configure multiple environments, and each of these environments will have certain unique attributes, such as servername, ip-address etc., we will need a way to set values to variables per specific environment.
+
+> - For this reason, we will now create a folder to keep each environment's variables file. 
+Therefore, create a new folder ***env-vars***, then for each environment, create new YAML files which we will use to set variables.
+
+![env-vars](images/env-vars.jpg)
+
+![structure](images/structure.jpg)
+
+![env files](<images/env vars files.jpg>)
+
+## Now paste the instruction below into the ***env-vars.yml*** file.
+
+```
+---
+- name: collate variables from env specific file, if it exists
+  hosts: all
+  tasks:
+    - name: looping through list of available files
+      include_vars: "{{ item }}"
+      with_first_found:
+        - files:
+            - dev.yml
+            - stage.yml
+            - prod.yml
+            - uat.yml
+          paths:
+            - "{{ playbook_dir }}/../env-vars"
+      tags:
+        - always
+```
+
+![content](<images/env-vars.yml content.jpg>)
+
+![content](<images/env-vars.yml content1 .jpg>)
+
+### Notice 3 things to notice here:
+
+- 1. We used ***include_vars*** syntax instead of ***include***.
+
+This is because Ansible developers decided to separate different features of the module. 
+
+From Ansible version 2.8, the ***include*** module is deprecated and variants of include_* must be used. 
+
+These are:
+
+- include_role
+- include_tasks
+- include_vars
+
+In the same version, variants of import were also introduces, such as:
+
+- import_role
+- import_tasks
+
+2. We made use of a special variables ***{{ playbook_dir }}*** and ***{{ inventory_file }}***. 
+
+- {{ playbook_dir }} will help Ansible to determine the location of the running playbook, and from there navigate to other path on the filesystem. 
+
+- {{ inventory_file }} on the other hand will dynamically resolve to the name of the inventory file being used, then append .yml so that it picks up the required file within the ***env-vars*** folder.
+
+3. We are including the variables using a loop. 
+
+with_first_found implies that, looping through the list of files, the first one found is used. 
+
+This is good so that we can always set default values in case an environment specific env file does not exist.
 
 
+# Update site.yml with dynamic assignments
 
+Update ***site.yml*** file to make use of the dynamic assignment. 
 
+At this point, we cannot test it yet. We are just setting the stage for what is yet to come. 
 
+***site.yml*** now look like this.
 
+```
+---
+- hosts: all
+- name: Include dynamic variables 
+  tasks:
+  import_playbook: ../static-assignments/common.yml 
+  include: ../dynamic-assignments/env-vars.yml
+  tags:
+    - always
+
+-  hosts: webservers
+- name: Webserver assignment
+  import_playbook: ../static-assignments/webservers.yml
+
+```
+![site.yml](<images/site yml.jpg>)
 
 
 
