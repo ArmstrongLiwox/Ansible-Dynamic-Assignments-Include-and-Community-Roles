@@ -314,6 +314,8 @@ Important Hints:
 
 ![site.yml update](<images/site yml update.jpg>)
 
+![site.yml1](<images/site yml 1.jpg>)
+
 > Now you can make use of ***env-vars\uat.yml*** file to define which loadbalancer to use in UAT environment by setting respective environmental variable to ***true***.
 
 You will activate load balancer, and enable ***nginx*** by setting these in the respective environment's env-vars file.
