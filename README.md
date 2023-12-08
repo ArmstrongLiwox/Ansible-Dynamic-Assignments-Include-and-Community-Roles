@@ -247,9 +247,19 @@ git push --set-upstream origin roles-feature
 ```
 ![push](images/push.jpg)
 
+
 > Now, if you are satisfied with your codes, you can create a Pull Request and merge it to main branch on GitHub.
 
-### Load Balancer roles
+![pull request](<images/pull request.jpg>)
+
+![merge](images/merge.jpg)
+
+![merge1](<images/merge 1.jpg>)
+
+![merged](images/merged.jpg)
+
+# Load Balancer roles
+
 We want to be able to choose which Load Balancer to use, Nginx or Apache, so we need to have two roles respectively:
 
 - Nginx
@@ -257,9 +267,9 @@ We want to be able to choose which Load Balancer to use, Nginx or Apache, so we 
 
 With your experience on Ansible so far you can:
 
->Decide if you want to develop your own roles, or find available ones from the community
+> Decide if you want to develop your own roles, or find available ones from the community
 
->Update both static-assignment and site.yml files to refer the roles
+> Update both static-assignment and site.yml files to refer the roles
 
 ---
 Important Hints:
