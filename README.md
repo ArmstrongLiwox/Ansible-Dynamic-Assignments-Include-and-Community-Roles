@@ -1,4 +1,4 @@
-# Ansible Dynamic Assignments (Include) and Community Roles
+# Ansible Dynamic Assignments (Include) and Community Roles - Armstrong
 
 In the previous projects we performed configurations using playbooks, roles and imports. 
 
@@ -346,6 +346,7 @@ Congratulations!
 
 # Congratulations!
 
+# SUCCESS
 
 
 
