@@ -277,18 +277,18 @@ With your experience on Ansible so far you can:
 
 > Decide if you want to develop your own roles, or find available ones from the community
 
-> Update both static-assignment and site.yml files to refer the roles
+> Update both ***static-assignment*** and ***site.yml*** files to refer the roles
 
 ---
 Important Hints:
 
 - Since you cannot use both Nginx and Apache load balancer, you need to add a condition to enable either one - this is where you can make use of variables.
 
-- Declare a variable in defaults/main.yml file inside the Nginx and Apache roles. Name each variables enable_nginx_lb and enable_apache_lb respectively.
+- Declare a variable in ***defaults/main.yml*** file inside the Nginx and Apache roles. Name each variables ***enable_nginx_lb*** and ***enable_apache_lb*** respectively.
 
-- Set both values to false like this enable_nginx_lb: false and enable_apache_lb: false.
+- Set both values to false like this ***enable_nginx_lb: false*** and ***enable_apache_lb: false***.
 
-- Declare another variable in both roles load_balancer_is_required and set its value to false as well
+- Declare another variable in both roles ***load_balancer_is_required*** and set its value to ***false*** as well
 
 - Update both assignment and site.yml files respectively
 
@@ -301,6 +301,9 @@ Important Hints:
     - { role: apache, when: enable_apache_lb and load_balancer_is_required }
 
 ```
+
+### site.yml file
+
 ```
      - name: Loadbalancers assignment
        hosts: lb
@@ -309,15 +312,21 @@ Important Hints:
 
 ```
 
-> Now you can make use of ***env-vars\uat.yml*** file to define which loadbalancer to use in UAT environment by setting respective environmental variable to true.
+![site.yml update](<images/site yml update.jpg>)
 
-You will activate load balancer, and enable nginx by setting these in the respective environment's env-vars file.
+> Now you can make use of ***env-vars\uat.yml*** file to define which loadbalancer to use in UAT environment by setting respective environmental variable to ***true***.
+
+You will activate load balancer, and enable ***nginx*** by setting these in the respective environment's env-vars file.
 
 ```
 enable_nginx_lb: true
 load_balancer_is_required: true
 
 ```
+![uat.yml](images/uat.jpg)
+
+![uat.yml1](<images/uat 1.jpg>)
+
 
 ---
 
