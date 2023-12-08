@@ -203,18 +203,22 @@ ansible-galaxy role install geerlingguy.mysql
 ![geer install](<images/geer install.jpg>)
 
 
- and rename the folder to mysql.
+ 
+and rename the folder to mysql.
 
-change 
----
+( it was not working. so i changed the following ) 
+
+
+
+```
 host_key_checking=false
 
 inventory=/var/lib/jenkins/jobs/Ansible/builds/16/archive/inventory
 
 roles_path=/var/lib/jenkins/jobs/Ansible/builds/16/archive/roles
----
+
 to 
----
+
 [defaults]
 
 host_key_checking=false
@@ -222,7 +226,9 @@ host_key_checking=false
 inventory=/home/ubuntu/ansible-config-mgt/inventory
 
 roles_path=/home/ubuntu/ansible-config-mgt/roles
----
+```
+
+
 
 ![geer installed](<images/geer installed.jpg>)
 
@@ -257,6 +263,8 @@ git push --set-upstream origin roles-feature
 ![merge1](<images/merge 1.jpg>)
 
 ![merged](images/merged.jpg)
+
+
 
 # Load Balancer roles
 
