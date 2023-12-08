@@ -146,6 +146,7 @@ At this point, we cannot test it yet. We are just setting the stage for what is 
 ```
 ![site.yml](<images/site yml.jpg>)
 
+---
 
 ## Update site.yml with dynamic assignments
 
@@ -171,14 +172,18 @@ Of course you must have git installed and configured on Jenkins-Ansible server a
 
 - On Jenkins-Ansible server make sure that git is installed with git --version, then go to 'ansible-config-mgt' directory and run
 
+![server git](<images/git on server.jpg>)
+
+![git clone](<images/git clone.jpg>)
+
 ```
 git init
 ```
 ```
-git pull https://github.com/<your-name>/ansible-config-mgt.git
+git pull https://github.com/ArmstrongLiwox/ansible-config-mgt.git
 ```
 ```
-git remote add origin https://github.com/<your-name>/ansible-config-mgt.git
+git remote add origin https://github.com/ArmstrongLiwox/ansible-config-mgt.git
 ```
 ```
 git branch roles-feature
@@ -186,12 +191,46 @@ git branch roles-feature
 ```
 git switch roles-feature
 ```
+![git switch roles-feature](<images/git switch roles-feature.jpg>)
 
-> Inside roles directory create your new MySQL role with ansible-galaxy install geerlingguy.mysql and rename the folder to mysql.
+
+> Inside roles directory create your new MySQL role with 
+
+```
+ansible-galaxy role install geerlingguy.mysql
+```
+
+![geer install](<images/geer install.jpg>)
+
+
+ and rename the folder to mysql.
+
+change 
+---
+host_key_checking=false
+
+inventory=/var/lib/jenkins/jobs/Ansible/builds/16/archive/inventory
+
+roles_path=/var/lib/jenkins/jobs/Ansible/builds/16/archive/roles
+---
+to 
+---
+[defaults]
+
+host_key_checking=false
+
+inventory=/home/ubuntu/ansible-config-mgt/inventory
+
+roles_path=/home/ubuntu/ansible-config-mgt/roles
+---
+
+![geer installed](<images/geer installed.jpg>)
 
 ```
 mv geerlingguy.mysql/ mysql
 ```
+
+![rename geer](<images/rename geer.jpg>)
 
 Read README.md file, and edit roles configuration to use correct credentials for MySQL required for the tooling website.
 
@@ -206,6 +245,8 @@ git commit -m "Commit new role files into GitHub"
 ```
 git push --set-upstream origin roles-feature
 ```
+![push](images/push.jpg)
+
 > Now, if you are satisfied with your codes, you can create a Pull Request and merge it to main branch on GitHub.
 
 ### Load Balancer roles
