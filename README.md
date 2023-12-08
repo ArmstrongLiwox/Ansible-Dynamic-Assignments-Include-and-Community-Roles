@@ -301,6 +301,10 @@ Important Hints:
     - { role: apache, when: enable_apache_lb and load_balancer_is_required }
 
 ```
+![loadbalancer](images/loadbalancer.yml.jpg)
+
+![loadbalancer1](<images/loadbalancer 1.yml.jpg>)
+
 
 ### site.yml file
 
